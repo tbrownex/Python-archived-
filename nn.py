@@ -4,7 +4,7 @@ from sklearn.utils import shuffle
 import sys
 import time
 
-TB_DIR   = '/home/tom/ML/tb'                  # where to store Tensorboard data
+TB_DIR   = '/home/tom/ML/tb'                  # where to store TensorBoard data
 SAVE_DIR = "/home/tom/ML/tf_checkpoints/"
 
 def run(data, parms, iteration):
