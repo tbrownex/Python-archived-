@@ -23,13 +23,13 @@ SELECTED_COLS = ['age_alt', 'income_bins', 'marital_status', 'owner_type',
                  'asian', 'jewish', 'indian', 'other', 'Label']
 
 # NN hyper-parameters
-l1_size       = [10,15,20,30,40,60,80,100]               # Count of nodes in layer 1
-learning_rate = [.0005, .0003, .0001]
+l1_size       = [10]               # Count of nodes in layer 1
+learning_rate = [.0003]
 Lambda        = [0.1]              # Regularization parameter
 weight        = [300]              # Degree to which Positives are weighted in the loss function
 batch_size    = [128]
-epochs        = [40]
-activation    = ['tanh', 'ReLU']           # 'tanh' 'leakyReLU' 'ReLU' 'relu6' 'elu' 'crelu'
+epochs        = [10]
+activation    = ['ReLU']           # 'tanh' 'leakyReLU' 'ReLU' 'relu6' 'elu' 'crelu'
 
 def get_data():
     df = pd.read_csv(DATA_DIR+CLIENT+FILENM, sep="|")
