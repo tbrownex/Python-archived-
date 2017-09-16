@@ -7,11 +7,12 @@ import time
 from nn               import run
 import jobNumber as job
 
-TEST_PCT      = 0.0
-VAL_PCT       = 0.25
-LABELS        = np.array([0,1])
-DATA_DIR      = "/home/tom/Dropbox/data/ML/LV/SimpliSafe/"
-FILENM        = 'train.csv'
+CLIENT   = 'SimpliSafe/'
+TEST_PCT = 0.0
+VAL_PCT  = 0.25
+LABELS   = np.array([0,1])
+DATA_DIR = "/home/tom/Dropbox/data/ML/LV/"
+FILENM   = 'train.csv'
 
 # This is for the Summary file
 keys = ['l1_size','learning_rate','lambda','weight','batch_size','epochs','activation']
@@ -31,7 +32,7 @@ epochs        = [40]
 activation    = ['tanh', 'ReLU']           # 'tanh' 'leakyReLU' 'ReLU' 'relu6' 'elu' 'crelu'
 
 def get_data():
-    df = pd.read_csv(DATA_DIR+FILENM, sep="|")
+    df = pd.read_csv(DATA_DIR+CLIENT+FILENM, sep="|")
     df = df[SELECTED_COLS]
     df = df.sample(frac=0.15)
     
@@ -76,7 +77,7 @@ if __name__ == "__main__":
     
     # Prepare the file which holds results of a run
     job_id = int(job.getJob())
-    summary = open(DATA_DIR+'summary_'+str(job_id)+".txt", 'w')
+    summary = open(DATA_DIR+CLIENT+job_id+'summary_'+str(job_id)+".txt", 'w')
     rec = "|".join(keys)
     rec += "|"+"TP count"+ "|"+"Lift"
     rec = rec+"\n"
