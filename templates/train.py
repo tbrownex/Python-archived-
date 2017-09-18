@@ -14,7 +14,7 @@ LABELS   = np.array([0,1])
 DATA_DIR = "/home/tom/Dropbox/data/ML/LV/"
 FILENM   = 'train.csv'
 
-# This is for the Summary file
+# This is for the summary file
 keys = ['l1_size','learning_rate','lambda','weight','batch_size','epochs','activation']
 
 SELECTED_COLS = ['age_alt', 'income_bins', 'marital_status', 'owner_type',
