@@ -1,10 +1,10 @@
 import pandas as pd
 import numpy  as np
-from scale_split_data import split
 import os
 import sys
 import time
 from nn               import run
+from scale_split_data import split
 import jobNumber as job
 
 CLIENT   = 'SimpliSafe/'

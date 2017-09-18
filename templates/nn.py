@@ -4,13 +4,13 @@ from sklearn.utils import shuffle
 import sys
 import time
 
-TB_DIR   = '/home/tom/ML/tb'                  # where to store TensorBoard data
-SAVE_DIR = "/home/tom/ML/tf_checkpoints/"
+TB_DIR   = '/home/tom/ML/tb/'                 # where to store TensorBoard data
+SAVE_DIR = "/home/tom/ML/tf_checkpoints/"     # where to store the saved model
 
 def run(data, parms, iteration):
     run_id = 'RUN'+str(iteration)
+    print("---------------------")
     print('{}'.format(run_id))
-    print(parms)
     
     # get the true response rate to compare to my predictions
     true_rr = np.sum(data['val_labels'][:,-1]) / data['val_labels'].shape[0]
@@ -26,16 +26,14 @@ def run(data, parms, iteration):
     BATCH      = parms['batch_size']
     EPOCHS     = parms['epochs']
     ACTIVATION = parms['activation']
-    
-    progress = [x*10 for x in range(1,21)]  # For displaying how far along the process is
-    
+        
     # Set up the network
     tf.reset_default_graph()
     x  = tf.placeholder("float", shape=[None, feature_count], name="input")
     y_ = tf.placeholder("float", shape=[None, num_classes])
 
-    l1_w     = tf.Variable(tf.truncated_normal([feature_count, L1], dtype=tf.float32))
-    l1_b     = tf.Variable(tf.truncated_normal([1,L1], dtype=tf.float32))
+    l1_w = tf.Variable(tf.truncated_normal([feature_count, L1], dtype=tf.float32))
+    l1_b = tf.Variable(tf.truncated_normal([1,L1], dtype=tf.float32))
     
     if   ACTIVATION == 'tanh':
         l1_act = tf.nn.tanh(tf.matmul(x,l1_w) + l1_b)
@@ -67,12 +65,10 @@ def run(data, parms, iteration):
     
     saver      = tf.train.Saver()
     
-    CP = tf.ConfigProto(
-        device_count = {'GPU': 1}
-    )
+    CP = tf.ConfigProto( device_count = {'GPU': 1} )           # set to 0 if you want CPU only
     
     sess = tf.Session(config=CP)
-    train_writer = tf.summary.FileWriter(TB_DIR + '/' + run_id, sess.graph)
+    train_writer = tf.summary.FileWriter(TB_DIR + run_id, sess.graph)
     sess.run(tf.global_variables_initializer())
     for i in range(EPOCHS):
         a,b = shuffle(data['train_x'],data['train_labels'])
@@ -84,6 +80,7 @@ def run(data, parms, iteration):
                 c = sess.run(merged, feed_dict = {x: data['val_x'], y_: data['val_labels']})
                 train_writer.add_summary(c, count)
                 count += 1
+                
         # At the end of each epoch count the number of True Positives in a given batch (batch size is K)
         L2 = sess.run(l2_out, feed_dict = {x: data['val_x'], y_: data['val_labels']})
         K = 100000
