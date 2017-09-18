@@ -77,7 +77,7 @@ if __name__ == "__main__":
     
     # Prepare the file which holds results of a run
     job_id = int(job.getJob())
-    summary = open(DATA_DIR+CLIENT+str(job_id)+'summary_'+str(job_id)+".txt", 'w')
+    summary = open(DATA_DIR+CLIENT+'summary_'+str(job_id)+".txt", 'w')
     rec = "|".join(keys)
     rec += "|"+"TP count"+ "|"+"Lift"
     rec = rec+"\n"
